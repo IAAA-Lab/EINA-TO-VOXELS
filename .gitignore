@@ -1,1 +1,4 @@
 *./pyc
+.directory
+.idea/
+/venv/
