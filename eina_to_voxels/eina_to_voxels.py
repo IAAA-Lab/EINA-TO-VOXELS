@@ -1,7 +1,7 @@
 import numpy as np
 from laspy.file import File
-import pointcloud_proc
-import openStreetMap
+from pointcloud_proc import pointcloud_proc
+from eina_to_voxels.openStreetMap import openStreetMap
 import colorsys
 import worldDTO
 import resource
@@ -20,7 +20,7 @@ class World:
         self.osm = openStreetMap.OpenStreetMap()
         self.heuristics = []
         
-        
+        # Lee fichero .las cuya ruta está en src
         inFile = File(src, mode = "r")
         
         xMin = min(inFile.x)
@@ -32,17 +32,19 @@ class World:
         zMax = max(inFile.z)
         
         
-        # Modificar el brillo de los colores
+        # Optimizar colores intentando que no haya mucha diferencia entre brillos y sombras
         rgb = changeBrightness(inFile.Red,inFile.Green,inFile.Blue)
         
-        #Se guardan las coordenadas en la variable coord como una unica lista de coordenadas (x, y, z)
+        # Se guardan las coordenadas en la variable coord como una unica lista de coordenadas (x, y, z)
         coords = np.vstack((inFile.x, inFile.y, inFile.z, rgb[0],rgb[1],rgb[2])).transpose()
         
         
-        #Numero de celdas para x, y, z
+        # Numero de celdas para x, y, z
+        # La cuenta solo funciona porque se asume que las coordenadas están en metros y que
+        # queremos 1 metro por celda. Al menos la segunda debería ser un parámetro
         resolution = (int(round(xMax - xMin)), int(round(yMax - yMin)), int(round(zMax - zMin)))
     
-        #Esquinas max y min de la estructura
+        # Esquinas max y min de la estructura
         bcube = {'min': (xMin, yMin, zMin),'max': (xMax, yMax, zMax)}
         
         
@@ -63,7 +65,7 @@ class World:
         
         for h in self.heuristics:
             w = h.apply(w) 
-            print using("mem")
+            print(using("mem"))
         self.matrix = w.matrix
                 
     """
@@ -92,6 +94,7 @@ class World:
         
 """
 Change color brightness for a rgb tuple
+red, green and blue are nunpy arrays (CREO) 
 """
 def changeBrightness(red,green,blue):
     rgb = np.vstack((red, green, blue)).transpose()

@@ -1,4 +1,4 @@
-import heuristic
+from heuristic import heuristic
 
 import os
 import sys
