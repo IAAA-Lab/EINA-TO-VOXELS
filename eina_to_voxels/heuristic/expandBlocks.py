@@ -4,7 +4,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from pointcloud_proc import pointcloud_proc
+from pcloudproc import pcloudproc
 
 class ExpandBlocks(heuristic.Heuristic):
     
@@ -19,7 +19,7 @@ class ExpandBlocks(heuristic.Heuristic):
         
         matrix = world.matrix
         
-        new_matrix = pointcloud_proc.SparseMatrix({}, matrix.resolution, matrix.bcube)
+        new_matrix = pcloudproc.SparseMatrix({}, matrix.resolution, matrix.bcube)
         #resolution = matrix.resolution
         cells = matrix.values.keys()
         for (i,j,k) in cells:

@@ -1,6 +1,6 @@
 import numpy as np
 from laspy.file import File
-from pointcloud_proc import pointcloud_proc
+from minecraft import *
 from eina_to_voxels.openStreetMap import openStreetMap
 import colorsys
 import worldDTO
@@ -51,7 +51,7 @@ class World:
         print("Creando matriz")
     
         
-        self.matrix = pointcloud_proc.SparseMatrix.create_from_coords(coords, resolution, bcube)
+        self.matrix = sparse_matrix_from_pointcolors(coords, resolution, bcube)
 
 
         

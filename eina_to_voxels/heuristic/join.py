@@ -5,7 +5,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import pointcloud_proc
+import pcloudproc
 
 class Join(heuristic.Heuristic):
     
@@ -24,7 +24,7 @@ class Join(heuristic.Heuristic):
         matrix = world.matrix
         green = world.green
         
-        #new_matrix = pointcloud_proc.SparseMatrix(copy.copy(matrix.values), matrix.resolution, matrix.bcube)
+        #new_matrix = pcloudproc.SparseMatrix(copy.copy(matrix.values), matrix.resolution, matrix.bcube)
         new_matrix = deepcopy(world.matrix)
         neighbor = 0
         neighbor_colors = [0]*20
