@@ -4,18 +4,13 @@ from minecraft import *
 from eina_to_voxels.openStreetMap import openStreetMap
 import colorsys
 import worldDTO
-import resource
+import Image
 
-def using(point=""):
-    usage=resource.getrusage(resource.RUSAGE_SELF)
-    return '''%s: usertime=%s systime=%s mem=%s mb
-           '''%(point,usage[0],usage[1],
-                (usage[2]*resource.getpagesize())/1000000.0 )
 
 
 class World:
     
-    def __init__(self, src):
+    def __init__(self, src, src2, x1, y1, x2, y2):
         
         self.osm = openStreetMap.OpenStreetMap()
         self.heuristics = []
@@ -32,7 +27,38 @@ class World:
         zMax = max(inFile.z)
         
         
-        # Optimizar colores intentando que no haya mucha diferencia entre brillos y sombras
+
+        if src2 != None:
+            print "hola"
+            coords = np.vstack((inFile.x, inFile.y, inFile.z)).transpose()
+
+            img = Image.open(src2)
+
+
+            pixelX_size = (x2 - x1)/img.size[0]
+            pixelY_size = (y2 - y1)/img.size[1]
+
+
+            rgb_img = img.convert('RGB')
+
+            red = []
+            green = []
+            blue = []
+
+            for coord in coords:
+
+                x = (coord[0]-x1)/pixelX_size
+                y = (coord[1]-y1)/pixelY_size
+                rgb = rgb_img.getpixel((int(x), int(y)))
+
+                red.append(rgb[0]*255)
+                green.append(rgb[1]*255)
+                blue.append(rgb[2]*255)
+
+            rgb = (red, green, blue)
+            print "adios"
+
+        # Modificar el brillo de los colores
         rgb = changeBrightness(inFile.Red,inFile.Green,inFile.Blue)
         
         # Se guardan las coordenadas en la variable coord como una unica lista de coordenadas (x, y, z)
@@ -54,8 +80,7 @@ class World:
         self.matrix = sparse_matrix_from_pointcolors(coords, resolution, bcube)
 
 
-        
-        
+
     def add(self, heuristic):
         self.heuristics.append(heuristic)   
         
