@@ -4,7 +4,7 @@ from minecraft import *
 from eina_to_voxels.openStreetMap import openStreetMap
 import colorsys
 import worldDTO
-import Image
+from PIL import Image
 
 
 
@@ -29,7 +29,7 @@ class World:
         
 
         if src2 != None:
-            print "hola"
+            print("hola")
             coords = np.vstack((inFile.x, inFile.y, inFile.z)).transpose()
 
             img = Image.open(src2)
@@ -56,7 +56,7 @@ class World:
                 blue.append(rgb[2]*255)
 
             rgb = (red, green, blue)
-            print "adios"
+            print("adios")
 
         # Modificar el brillo de los colores
         rgb = changeBrightness(inFile.Red,inFile.Green,inFile.Blue)
@@ -89,8 +89,7 @@ class World:
         w = worldDTO.WorldDTO(self.matrix)
         
         for h in self.heuristics:
-            w = h.apply(w) 
-            print(using("mem"))
+            w = h.apply(w)             
         self.matrix = w.matrix
                 
     """

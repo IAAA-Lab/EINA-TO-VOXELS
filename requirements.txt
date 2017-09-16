@@ -3,3 +3,4 @@ osmapi
 laspy == 1.5.0
 matplotlib
 pygdal
+Pillow
