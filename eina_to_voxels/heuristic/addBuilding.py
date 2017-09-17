@@ -1,10 +1,10 @@
-import heuristic
+from heuristic import heuristic
 
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import pointcloud_proc
+import pcloudproc
 import binvox_rw
 
 class AddBuilding(heuristic.Heuristic):
@@ -25,7 +25,7 @@ class AddBuilding(heuristic.Heuristic):
         matrix = world.matrix
         myBuildings = world.myBuildings
         
-        cell = pointcloud_proc.coords_to_cell((x,y,z), matrix.resolution, matrix.bcube)
+        cell = pcloudproc.coords_to_cell((x, y, z), matrix.resolution, matrix.bcube)
         x = int(cell[0])
         y = int(cell[1])
         z = int(cell[2])

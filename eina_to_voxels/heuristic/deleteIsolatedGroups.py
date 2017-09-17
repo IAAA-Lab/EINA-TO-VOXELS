@@ -1,4 +1,4 @@
-import heuristic
+from heuristic import heuristic
 
 class DeleteIsolatedGroups(heuristic.Heuristic):
     
@@ -33,16 +33,16 @@ class DeleteIsolatedGroups(heuristic.Heuristic):
         neighborhood = []
         
         for r in range(0,resolution[2]):
-            cluster = [[[] for j in range(y/n + (y%n > 0))] for k in range(x/n + (x%n > 0))]
+            cluster = [[[] for j in range(int(y/n) + (y%n > 0))] for k in range(int(x/n) + (x%n > 0))]
             for (i,j) in cellsByHeight[r]:
                 cluster[int(i/n)][int(j/n)].append((i,j,r))
                         
-            for p in range(0,resolution[0]/n):
-                for q in range(0,resolution[1]/n):
+            for p in range(0,int(resolution[0]/n)):
+                for q in range(0,int(resolution[1]/n)):
                     if buildings[p*n][q*n] == False:
                         value = 0
                         if len(cluster[p][q]) > 0:
-                            if ((p == 0) | (p == resolution[0]/n-1) | (q == 0) | (q == resolution[1]/n-1)):
+                            if ((p == 0) | (p == int(resolution[0]/n-1)) | (q == 0) | (q == int(resolution[1]/n-1))):
                                 neighborhood = cluster[p][q]
                             else:
                                 neighborhood = cluster[p][q] + cluster[p+1][q] + cluster[p-1][q] + cluster[p][q+1] + cluster[p][q-1]

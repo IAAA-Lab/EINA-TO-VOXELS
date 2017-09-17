@@ -1,4 +1,5 @@
 *./pyc
 .directory
 .idea/
-/venv/
+venv/
+venv_3_5/

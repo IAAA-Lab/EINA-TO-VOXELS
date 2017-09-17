@@ -1,11 +1,11 @@
-import heuristic
-import copy
+from heuristic import heuristic
+from copy import deepcopy
 
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import pointcloud_proc
+import pcloudproc
 
 class Join(heuristic.Heuristic):
     
@@ -24,7 +24,8 @@ class Join(heuristic.Heuristic):
         matrix = world.matrix
         green = world.green
         
-        #new_matrix = pointcloud_proc.SparseMatrix(copy.copy(matrix.values), matrix.resolution, matrix.bcube)
+        #new_matrix = pcloudproc.SparseMatrix(copy.copy(matrix.values), matrix.resolution, matrix.bcube)
+        new_matrix = deepcopy(world.matrix)
         neighbor = 0
         neighbor_colors = [0]*20
         num = 0
@@ -65,16 +66,16 @@ class Join(heuristic.Heuristic):
                                     #print neighbor
                                     #print neighbor_colors
                                     color = neighbor_colors.index(max(neighbor_colors))
-                                    
-                                    matrix.values[(x,y,k)] = (1,color)
+
+                                    new_matrix.values[(x,y,k)] = (1,color)
                                     if (color == 16) & (green[x][y]):
                                         num+=1
                                         if num%30 == 0:
-                                            createTree(matrix,world,x,y,k)
+                                            createTree(new_matrix,world,x,y,k)
                                 neighbor_colors = [0]*20
                                 neighbor = 0
                         
-        #world.matrix = new_matrix
+        world.matrix = new_matrix
         return world
     
     

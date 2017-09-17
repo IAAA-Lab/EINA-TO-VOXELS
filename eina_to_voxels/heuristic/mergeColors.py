@@ -1,10 +1,10 @@
-import heuristic
+from heuristic import heuristic
 
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import pointcloud_proc
+from pcloudproc import pcloudproc
 
 class MergeColors(heuristic.Heuristic):
     
@@ -18,7 +18,7 @@ class MergeColors(heuristic.Heuristic):
         
         matrix = world.matrix
         
-        new_matrix = pointcloud_proc.SparseMatrix({}, matrix.resolution, matrix.bcube)
+        new_matrix = pcloudproc.SparseMatrix({}, matrix.resolution, matrix.bcube)
         neighbor_colors = [0]*30
         new_score = neighbor_colors
         
@@ -26,16 +26,16 @@ class MergeColors(heuristic.Heuristic):
         num = 5
         resolution = matrix.resolution
         x, y, z = resolution
-        cluster = [[[[] for i in range(z/num + (z%num > 0))] for j in range(y/num + (y%num > 0))] for k in range(x/num + (x%num > 0))]
+        cluster = [[[[] for i in range(int(z/num) + (z%num > 0))] for j in range(int(y/num) + (y%num > 0))] for k in range(int(x/num) + (x%num > 0))]
         
         cells = matrix.values.keys()
         for (i,j,k) in cells:
             cluster[int(i/num)][int(j/num)][int(k/num)].append((i,j,k))
             
             
-        for p in range(0,resolution[0]/num):
-            for q in range(0,resolution[1]/num):
-                for r in range(0,resolution[2]/num):
+        for p in range(0,int(resolution[0]/num)):
+            for q in range(0,int(resolution[1]/num)):
+                for r in range(0,int(resolution[2]/num)):
                     for myCell in cluster[p][q][r]:
                         #new_matrix.values[myCell] = matrix.values[myCell]
                         
