@@ -1,11 +1,12 @@
-import numpy as np
-from laspy.file import File
-from eina_to_voxels.openStreetMap import openStreetMap
 import colorsys
-import worldDTO
-from pcloudproc.pcloudproc import *
-from PIL import Image
 
+import numpy as np
+from PIL import Image
+from laspy.file import File
+
+import worldDTO
+from eina_to_voxels.openStreetMap import openStreetMap
+from external.pcloudproc import *
 
 
 class World:

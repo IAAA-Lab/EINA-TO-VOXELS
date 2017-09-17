@@ -1,10 +1,12 @@
-from heuristic import heuristic
-
 import os
 import sys
+
+from heuristic import heuristic
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from pcloudproc import pcloudproc
+from external import pcloudproc
+
 
 class ExpandBlocks(heuristic.Heuristic):
     

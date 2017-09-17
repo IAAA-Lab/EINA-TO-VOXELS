@@ -6,9 +6,10 @@
 
 import argparse
 import math
-import time
 import sys
-import pcloudproc.chull as chull
+import time
+
+import external.chull as chull
 
 """
 In this module:

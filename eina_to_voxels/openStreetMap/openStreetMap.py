@@ -1,15 +1,17 @@
-from osgeo import ogr
-import utm
-import osmapi
-import matplotlib.pyplot as plt 
 import json
-import time
 import math
 import os
 import sys
+
+import matplotlib.pyplot as plt
+import osmapi
+import utm
+from osgeo import ogr
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from pcloudproc import pcloudproc
+from external import pcloudproc
+
 
 class OpenStreetMap:
     
@@ -161,7 +163,7 @@ class OpenStreetMap:
         for i in range (0,resolution[0]):
             for j in range(0,resolution[1]):
                 point = ogr.Geometry(ogr.wkbPoint)
-                coord = pcloudproc.cell_to_coords((i,j,0),resolution,matrix.bcube)
+                coord = pcloudproc.cell_to_coords((i, j, 0), resolution, matrix.bcube)
                 point.AddPoint(coord[0],coord[1])
                 
                 
